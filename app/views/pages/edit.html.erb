@@ -1,0 +1,53 @@
+<% content_for :title do %>
+    <%= @page.title %> Editing
+<%end%>
+<h1>Editing <%= @page.menu_label%> Page</h1>
+<%= button_to 'Return to main menu', pages_path, method: :get%><br>
+
+<%= form_for :page, url: page_path(@page), method: :patch do |f| %>
+    <% if @page.errors.any?%>
+        <div id="error_explanation">
+          <h3>
+            <%= pluralize(@page.errors.count,"error") %> has been detected!
+          </h3>
+          <ul>
+            <% @page.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <%end%>
+    <p>
+      <%= f.label :Title%><br>
+      <%= f.text_field :title%>
+    </p>
+    <p>
+      <%= f.label :Description%><br>
+      <%= f.text_field :description%>
+    </p>
+    <p>
+      <%= f.label :Slug%><br>
+      <%= f.text_field :slug%>
+    </p>
+    <p>
+      <%= f.label :"Label in menu"%><br>
+      <%= f.text_field :menu_label%>
+    </p>
+    <p>
+      <%= f.label :H1%><br>
+      <%= f.text_field :h1%>
+    </p>
+    <p>
+      <%= f.label :Content%><br>
+      <%= f.cktext_area :content, :ckeditor => {:toolbar => 'img',:customConfig => asset_path('ckeditor/config.js'),:height=>'1000px'}%>
+    </p>
+    <p>
+      <%= f.label :Priority%><br>
+      <%= f.number_field :priority, in: 1..5, step:1%>
+    </p>
+    <%= f.label :Published?%>
+    <%= f.check_box :published, value:false%><br>
+    <%= f.hidden_field :published_at, value: Time.now%><br>
+    <%= f.submit %>
+
+<%end%>

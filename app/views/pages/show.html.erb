@@ -1,0 +1,23 @@
+<% if !@page.nil?%>
+    <% content_for :title do %>
+        <%= @page.title %>
+    <%end%>
+    <% content_for :meta do %>
+        <meta name="description" content=" <%= @page.description %>"/>
+    <%end%>
+
+    <h1><%=@page.h1%></h1>
+    <%= button_to 'Return to main menu', pages_path, method: :get%><br>
+    <%= button_to 'Edit page', edit_page_path(@page), method: :get%>
+    <%= button_to 'Delete page', page_path(@page), method: :delete,data: { confirm: 'Page Has been deleted. Are you shure?'}%><br><br>
+    <hr>
+    <%= raw @page.content%>
+    <hr>
+    <% if @page.published%>
+    <p>Published at: <%= @page.published_at%></p>
+    <% end%>
+<%end%>
+<% if @page.nil? %>
+    <% raise ActionController::RoutingError.new('404 - Not Found') %>
+
+<%end%>

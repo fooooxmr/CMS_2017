@@ -1,0 +1,42 @@
+<% content_for :title do %>
+    Main menu
+<%end%>
+<h1>Main Menu</h1>
+<%= button_to 'Create new page', new_page_path, method: :get %><br>
+<script>
+    $(document).ready(function(){
+        $(".toggler").click(function(){
+            $(".not_published").toggle("slow");
+        });
+    });
+</script>
+<p>Publiched Pages:</p>
+<div class="published" >
+
+  <% if @published_pages.any? %>
+      <% @published_pages.each do |page|%>
+      <li><%= link_to page.menu_label, page_path(page)%> </li>
+      <%end%>
+  <%end%>
+  </ul>
+  <% if !@published_pages.any? %>
+      <p>Thete is no pages :(</p>
+  <%end%>
+</div>
+<hr>
+<button class="toggler">Show/hide not published pages</button>
+
+<p>Not Publiched Pages:</p>
+<% if !@not_published_pages.any? %>
+    <p> Thete is no pages :(</p>
+<%end%>
+<div class="not_published">
+
+  <% if @not_published_pages.any? %>
+  <% @not_published_pages.each do |page|%>
+          <li><%= link_to page.menu_label, page_path(page)%> </li>
+      <%end%>
+      <%end%>
+
+
+</div>

@@ -1,0 +1,47 @@
+<% content_for :title do %>
+    Creating new Page
+<%end%>
+<h1>Creating New Page</h1>
+<%= button_to 'Return to main menu', pages_path, method: :get%><br>
+<%= form_for :page, url:pages_path do |f| %>
+<% if @page.errors.any?%>
+        <div id="error_explanation">
+          <h3>
+            <%= pluralize(@page.errors.count,"error") %> has been detected!
+          </h3>
+          <ul>
+            <% @page.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+        <%end%>
+    <table>
+      <tr>
+        <td>
+          <%= f.label :Title%><br>
+          <%= f.text_field :title%>
+        </td>
+        <td><%= f.label :Description%><br>
+          <%= f.text_field :description%></td>
+        <td><%= f.label :Slug%><br>
+          <%= f.text_field :slug%></td>
+        <td> <%= f.label :"Label in menu"%><br>
+          <%= f.text_field :menu_label%></td>
+        <td><%= f.label :H1%><br>
+          <%= f.text_field :h1%></td>
+        <td> <%= f.label :Priority%><br>
+          <%= f.number_field :priority, in: 1..5, step:1%></td>
+      </tr>
+    </table>
+
+      <%= f.label :Content%><br>
+      <%= f.cktext_area :content, :ckeditor => {:toolbar => 'img',:customConfig => asset_path('ckeditor/config.js'),:height=>'800px'}%>
+    </p>
+    <p>
+
+    </p>
+    <%= f.hidden_field :published, value:false%><br>
+<%= f.submit %>
+
+<%end%>
